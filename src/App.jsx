@@ -19,21 +19,15 @@ import {
   ExternalLink,
   Salad, ClipboardCheck, Globe, Handshake, AlertTriangle, 
 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
 
 function App() {
+
   const [currentPage, setCurrentPage] = useState('home');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [contactReason, setContactReason] = useState('');
-  const [showOtherReason, setShowOtherReason] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    reason: '',
-    otherReason: '',
-    feedback: ''
-  });
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
 
   const carouselImages = [
     { url: '\\Screenshot 2025-06-23 150047.png'
@@ -61,21 +55,7 @@ function App() {
     setCurrentImageIndex((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
   };
 
-  const handleContactReasonChange = (reason) => {
-    setContactReason(reason);
-    setShowOtherReason(reason === 'other');
-    setFormData(prev => ({ ...prev, reason }));
-  };
-
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message. We will contact you soon!');
-  };
+  
 
   const renderNavigation = () => (
     <nav className="fixed top-0 w-full bg-black/95 backdrop-blur-sm shadow-2xl z-50 transition-all duration-300 border-b border-yellow-500/20">
@@ -500,117 +480,158 @@ function App() {
     </div>
   );
 
- const renderContactPage = () => (
-    <div className="pt-20 py-16 bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4 pt-10">Contact Us</h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            We're here to answer your questions and help you learn more about our services. Reach out to us today.
-          </p>
-        </div>
+  
 
-        {/* Full Width Contact Form */}
-        <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl p-8 border border-yellow-500/20">
-          <h3 className="text-2xl font-bold text-white mb-6 text-center">Send Us a Message</h3>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors text-white placeholder-gray-400"
-                  placeholder="Your full name"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors text-white placeholder-gray-400"
-                  placeholder="(555) 123-4567"
-                />
-              </div>
-            </div>
+ const [formData, setFormData] = useState({
+  name: '',
+  phone: '',
+  email: '',
+  reason: '',
+  otherReason: ''
+});
 
+const [contactReason, setContactReason] = useState('');
+const [showOtherReason, setShowOtherReason] = useState(false);
+
+const handleInputChange = (field, value) => {
+  setFormData(prev => ({ ...prev, [field]: value }));
+};
+
+const handleContactReasonChange = (value) => {
+  setContactReason(value);
+  setFormData(prev => ({ ...prev, reason: value }));
+  setShowOtherReason(value === 'other');
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const emailParams = {
+    name: formData.name,
+    phone: formData.phone,
+    email: formData.email,
+    reason: formData.reason === 'other' ? formData.otherReason : formData.reason,
+  };
+
+  emailjs.send('service_service', 'template_tizzys', emailParams, '9KTqfYDynDBizZ6x5')
+    .then(() => {
+      alert('Thank you! We\'ll be in touch soon.');
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        reason: '',
+        otherReason: ''
+      });
+      setContactReason('');
+      setShowOtherReason(false);
+    })
+    .catch((error) => {
+      console.error('EmailJS error:', error);
+      alert('Something went wrong. Please try again.');
+    });
+};
+
+const renderContactPage = () => (
+  <div className="pt-20 py-16 bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl font-bold text-white mb-4 pt-10">Contact Us</h2>
+        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          We're here to answer your questions and help you learn more about our services. Reach out to us today.
+        </p>
+      </div>
+
+      <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl p-8 border border-yellow-500/20">
+        <h3 className="text-2xl font-bold text-white mb-6 text-center">Send Us a Message</h3>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Email Address *
-              </label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Full Name *</label>
               <input
-                type="email"
+                type="text"
                 required
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
+                value={formData.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
                 className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors text-white placeholder-gray-400"
-                placeholder="your.email@example.com"
+                placeholder="Your full name"
               />
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-3">
-                Reason for Contact *
-              </label>
-              <div className="grid md:grid-cols-3 gap-4">
-                {[
-                  { value: 'employment', label: 'Employment Opportunities' },
-                  { value: 'tour', label: 'Schedule a House Tour / Pricing' },
-                  { value: 'other', label: 'Other' }
-                ].map((option) => (
-                  <label key={option.value} className="flex items-center p-4 bg-gray-800 rounded-lg border border-gray-600 hover:border-yellow-500/50 transition-colors cursor-pointer">
-                    <input
-                      type="radio"
-                      name="reason"
-                      value={option.value}
-                      checked={contactReason === option.value}
-                      onChange={(e) => handleContactReasonChange(e.target.value)}
-                      className="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-600 bg-gray-800"
-                    />
-                    <span className="ml-3 text-gray-300 text-sm font-medium">{option.label}</span>
-                  </label>
-                ))}
-              </div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number *</label>
+              <input
+                type="tel"
+                required
+                value={formData.phone}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors text-white placeholder-gray-400"
+                placeholder="(555) 123-4567"
+              />
             </div>
+          </div>
 
-            {showOtherReason && (
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Please specify your reason
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Email Address *</label>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors text-white placeholder-gray-400"
+              placeholder="your.email@example.com"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-3">Reason for Contact *</label>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                { value: 'employment', label: 'Employment Opportunities' },
+                { value: 'tour', label: 'Schedule a House Tour / Pricing' },
+                { value: 'other', label: 'Other' }
+              ].map((option) => (
+                <label key={option.value} className="flex items-center p-4 bg-gray-800 rounded-lg border border-gray-600 hover:border-yellow-500/50 transition-colors cursor-pointer">
+                  <input
+                    type="radio"
+                    name="reason"
+                    value={option.value}
+                    checked={contactReason === option.value}
+                    onChange={(e) => handleContactReasonChange(e.target.value)}
+                    className="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-600 bg-gray-800"
+                  />
+                  <span className="ml-3 text-gray-300 text-sm font-medium">{option.label}</span>
                 </label>
-                <input
-                  type="text"
-                  value={formData.otherReason}
-                  onChange={(e) => handleInputChange('otherReason', e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors text-white placeholder-gray-400"
-                  placeholder="Please describe your inquiry"
-                />
-              </div>
-            )}
-
-            <div className="text-center">
-              <button
-                type="submit"
-                className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black py-4 px-12 rounded-lg font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg"
-              >
-                Send Message
-              </button>
+              ))}
             </div>
-          </form>
-         
-        </div>
+          </div>
+
+          {showOtherReason && (
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Please specify your reason</label>
+              <input
+                type="text"
+                value={formData.otherReason}
+                onChange={(e) => handleInputChange('otherReason', e.target.value)}
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors text-white placeholder-gray-400"
+                placeholder="Please describe your inquiry"
+              />
+            </div>
+          )}
+
+          <div className="text-center">
+            <button
+              type="submit"
+              className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black py-4 px-12 rounded-lg font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg"
+            >
+              Send Message
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  );
+  </div>
+);
+
 
   const renderFooter = () => (
     <footer className="bg-black text-white py-12 border-t border-yellow-500/20">
