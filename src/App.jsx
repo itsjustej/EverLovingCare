@@ -6,7 +6,7 @@ import {
   Mail, 
   Phone, 
   MapPin, 
-  Heart, 
+  Heart,
   Shield, 
   Clock, 
   Award,
@@ -109,7 +109,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
             {[
               { id: 'home', label: 'Home', icon: Home },
               { id: 'services', label: 'Services', icon: Users },
-              { id: 'employee', label: 'Employee', icon: Briefcase },
+              { id: 'employment', label: 'Employee', icon: Briefcase },
               { id: 'contact', label: 'Contact', icon: Mail }
             ].map(({ id, label, icon: Icon }) => (
               <button
