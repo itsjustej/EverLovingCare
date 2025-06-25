@@ -30,16 +30,9 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
 
   const carouselImages = [
-    { url: '\\Screenshot 2025-06-23 150047.png'
-  }
+    { url: '\\Screenshot 2025-06-23 150047.png'},
+    { url: '\\CARF.png'}
   ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   const navigateToPage = (page) => {
     setCurrentPage(page);
@@ -399,7 +392,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
   <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 text-center">
     <h3 className="text-3xl font-bold mb-4 text-yellow-400">Onboarding</h3>
     <a
-      href="https://www.accreditationnow.com"
+      href="https://canvas.instructure.com/enroll/H9CA4N"
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-black px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
