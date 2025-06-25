@@ -58,7 +58,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
 
   const renderNavigation = () => (
-    <nav className="fixed top-0 w-full bg-black/95 backdrop-blur-sm shadow-2xl z-50 transition-all duration-300 border-b border-yellow-500/20">
+    <nav className="fixed top-0 w-full bg-black/95 backdrop-blur-sm shadow-2xl z-50 transition-all duration-300 border-b border--yellow500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -83,7 +83,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
             {[
               { id: 'home', label: 'Home', icon: Home },
               { id: 'services', label: 'Services', icon: Users },
-              { id: 'employment', label: 'Employment', icon: Briefcase },
+              { id: 'employment', label: 'Employee', icon: Briefcase },
               { id: 'contact', label: 'Contact', icon: Mail }
             ].map(({ id, label, icon: Icon }) => (
               <button
@@ -116,7 +116,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
             {[
               { id: 'home', label: 'Home', icon: Home },
               { id: 'services', label: 'Services', icon: Users },
-              { id: 'employment', label: 'Employment', icon: Briefcase },
+              { id: 'employee', label: 'Employee', icon: Briefcase },
               { id: 'contact', label: 'Contact', icon: Mail }
             ].map(({ id, label, icon: Icon }) => (
               <button
@@ -216,7 +216,7 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
               <ul className="list-disc list-inside space-y-2">
   <li><strong>Purpose</strong> – Deliver high-quality care for individuals with intellectual and developmental disabilities</li>
   <li><strong>Approach</strong> – Rooted in empathy, compassion, and professionalism</li>
-  <li><strong>Environment</strong> – Supportive group home setting that fosters dignity and growth</li>
+  <li><strong>Environment</strong> – Supportive family care setting that fosters dignity and growth</li>
 </ul>
             </p>
           </div>
@@ -305,11 +305,6 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
               description: "Safe, reliable transportation to medical appointments, shopping trips, social outings, and community activities with trained drivers."
             },
             {
-              icon: MapPin,
-              title: "Respite Care",
-              description: "Long-term care services providing families with temporary relief while ensuring their loved ones receive professional, compassionate care."
-            },
-            {
               icon: CheckCircle,
               title: "Health Monitoring",
               description: "Regular health assessments, vital sign monitoring, and coordination with healthcare providers to maintain optimal health and wellness."
@@ -359,126 +354,70 @@ const [currentImageIndex, setCurrentImageIndex] = useState(0);
   );
 
   const renderEmploymentPage = () => (
-    <div className="pt-20 py-16 bg-gradient-to-br from-black via-gray-900 to-black min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4 pt-10">Join Our Team</h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Make a meaningful difference in the lives of others while building a rewarding career in residential care.
+  <div className="pt-20 py-16 bg-gradient-to-br from-black via-gray-900 to-black min-h-screen">
+    <div className="text-center mb-16 px-4">
+      <h2 className="text-4xl font-bold text-white mb-4 pt-10">Join Our Team</h2>
+      <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+        Make a meaningful difference in the lives of others while building a rewarding career in residential care.
+      </p>
+    </div>
+
+    {/* Full-width unified box */}
+    <div className="w-full px-4 lg:px-32">
+      <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl p-10 border border-yellow-500/20 text-center">
+        <h3 className="text-2xl font-bold text-white mb-6 flex items-center justify-center">
+          <Briefcase className="h-6 w-6 text-yellow-400 mr-3" />
+          About the Position
+        </h3>
+        <div className="space-y-4 text-gray-300 text-left max-w-4xl mx-auto">
+          <p className="leading-relaxed">
+            <strong className="text-yellow-400">Residential Care Assistant</strong> - Join our compassionate team providing direct care to residents in a warm, family-like environment. This full-time position offers competitive compensation, comprehensive benefits, and opportunities for professional growth.
           </p>
-        </div>
+          <p className="leading-relaxed">
+            You'll work alongside experienced professionals to deliver personalized care, assist with daily living activities, and create meaningful connections with residents and their families. We offer flexible scheduling, ongoing training, and a supportive work environment.
+          </p>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* About the Job */}
-          <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl p-8 border border-yellow-500/20">
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-              <Briefcase className="h-6 w-6 text-yellow-400 mr-3" />
-              About the Position
-            </h3>
-            <div className="space-y-4 text-gray-300">
-              <p className="leading-relaxed">
-                <strong className="text-yellow-400">Residential Care Assistant</strong> - Join our compassionate team providing direct care to residents in a warm, family-like environment. This full-time position offers competitive compensation, comprehensive benefits, and opportunities for professional growth.
-              </p>
-              <p className="leading-relaxed">
-                You'll work alongside experienced professionals to deliver personalized care, assist with daily living activities, and create meaningful connections with residents and their families. We offer flexible scheduling, ongoing training, and a supportive work environment.
-              </p>
-              <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-                <h4 className="font-semibold text-yellow-400 mb-2">Benefits Include:</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Competitive hourly wages ($18-24/hour based on experience)</li>
-                  <li>• Health, dental, and vision insurance</li>
-                  <li>• Paid time off and holiday pay</li>
-                  <li>• Professional development opportunities</li>
-                  <li>• Retirement savings plan with company match</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Job Requirements */}
-          <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-2xl p-8 border border-yellow-500/20">
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-              <CheckCircle className="h-6 w-6 text-yellow-400 mr-3" />
-              Job Requirements
-            </h3>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Required Qualifications:</h4>
-                <ul className="space-y-2 text-gray-300">
-                  <li className="flex items-start">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    High school diploma or equivalent
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    Valid driver's license and reliable transportation
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    Ability to pass background check and drug screening
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    CPR and First Aid certification (or willingness to obtain)
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    Physical ability to assist residents with mobility
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-yellow-400 mb-3">Preferred Qualifications:</h4>
-                <ul className="space-y-2 text-gray-300">
-                  <li className="flex items-start">
-                    <Star className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    Previous experience in healthcare or caregiving
-                  </li>
-                  <li className="flex items-start">
-                    <Star className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    CNA, HHA, or similar certification
-                  </li>
-                  <li className="flex items-start">
-                    <Star className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    Bilingual capabilities (Spanish/English)
-                  </li>
-                  <li className="flex items-start">
-                    <Star className="h-4 w-4 text-yellow-400 mr-2 mt-1 flex-shrink-0" />
-                    Strong communication and interpersonal skills
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-{/* Training Link */}
-<div className="mt-20 text-center">
-  <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl p-10 border border-gray-700 text-white">
-    <h3 className="text-3xl font-bold mb-4 text-yellow-400">Start Your Residential Care Training</h3>
-    <p className="text-gray-300 mb-6 max-w-2xl mx-auto leading-relaxed">
-      Enroll in our accredited program to gain the essential skills and certifications needed for a fulfilling career in residential care. Designed for flexibility and real-world success.
-    </p>
+<div className="grid md:grid-cols-2 gap-8 mt-10">
+  {/* Training Box */}
+  <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 text-center">
+    <h3 className="text-3xl font-bold mb-4 text-yellow-400">Accreditation Now</h3>
     <a
       href="https://www.accreditationnow.com"
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center bg-yellow-500 hover:bg-yellow-600 text-black px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+      className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-black px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
     >
       <span>Begin Training</span>
       <ExternalLink className="h-5 w-5 ml-2" />
     </a>
     <p className="text-sm text-gray-400 mt-5">
-      Training completion time: <span className="font-medium text-white">2–3 weeks</span>
+      Completion time: <span className="font-medium text-white">15 Minutes</span>
+    </p>
+  </div>
+
+  {/* Canvas Link Box */}
+  <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 text-center">
+    <h3 className="text-3xl font-bold mb-4 text-yellow-400">Onboarding</h3>
+    <a
+      href="https://www.accreditationnow.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-black px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+    >
+      <span>Canvas</span>
+      <ExternalLink className="h-5 w-5 ml-2" />
+    </a>
+    <p className="text-sm text-gray-400 mt-5">
+      Completion time: <span className="font-medium text-white">8-10 Hours</span>
     </p>
   </div>
 </div>
 
-
-  </div>
+        </div>
+      </div>
     </div>
-  );
+  </div>
+);
 
   
 
